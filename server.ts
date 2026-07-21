@@ -29,7 +29,7 @@ async function startServer() {
         model: "gemini-3.1-flash-lite", // Flash Lite is good for simple context Q&A
         contents: `Context about the presentation: \n${context}\n\nUser Question: ${message}`,
         config: {
-          systemInstruction: "You are an AI assistant helping a user with questions about India Post claim procedures for deceased depositors, based on the provided presentation context. Answer the user's question accurately and concisely. If the context doesn't contain the answer, say you are not sure but they can check the official India Post guidelines.",
+          systemInstruction: "You are an AI assistant helping a user with questions about India Post claim procedures for deceased depositors, based on the provided presentation context. Answer the user's question accurately and concisely. Always provide your answers in a clear, point-wise format. If the context doesn't contain the answer, say you are not sure but they can check the official India Post guidelines.",
         },
       });
       

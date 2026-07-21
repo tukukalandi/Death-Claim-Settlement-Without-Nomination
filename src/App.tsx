@@ -36,6 +36,13 @@ export default function App() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      if (
+        document.activeElement?.tagName === 'INPUT' ||
+        document.activeElement?.tagName === 'TEXTAREA'
+      ) {
+        return;
+      }
+
       if (e.key === 'ArrowRight' || e.key === ' ') {
         e.preventDefault();
         nextSlide();
@@ -125,6 +132,7 @@ export default function App() {
                   min={1}
                   max={slides.length}
                   autoFocus
+                  onKeyDown={(e) => e.stopPropagation()}
                   className="w-8 md:w-10 bg-transparent border-b border-red-500 text-center outline-none focus:border-red-400 text-red-600 dark:text-red-400 p-0 m-0"
                   value={jumpInput}
                   onChange={(e) => setJumpInput(e.target.value)}

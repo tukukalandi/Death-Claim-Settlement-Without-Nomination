@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { MessageCircle, X, Send, Loader2 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 import { cn } from '../lib/utils';
 import { slides } from '../slides';
 import * as data from '../data';
@@ -115,10 +116,16 @@ export const ChatAssistant = () => {
                   "max-w-[85%] rounded-2xl p-3 text-sm leading-relaxed",
                   msg.role === 'user'
                     ? "bg-red-600 text-white rounded-tr-sm"
-                    : "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-sm"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-tl-sm markdown-body"
                 )}
               >
-                {msg.text}
+                {msg.role === 'user' ? (
+                  msg.text
+                ) : (
+                  <div className="prose prose-sm dark:prose-invert max-w-none prose-p:my-1 prose-ul:my-1 prose-ul:pl-4 prose-li:my-0.5">
+                    <ReactMarkdown>{msg.text}</ReactMarkdown>
+                  </div>
+                )}
               </div>
             </div>
           ))}
@@ -139,6 +146,7 @@ export const ChatAssistant = () => {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => e.stopPropagation()}
               placeholder="Ask a question..."
               className="w-full bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white placeholder:text-slate-500 dark:placeholder:text-slate-400 rounded-full pl-4 pr-12 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-red-500/50"
               disabled={isLoading}
